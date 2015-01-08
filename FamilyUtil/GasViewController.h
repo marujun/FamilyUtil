@@ -9,5 +9,8 @@
 #import "UFViewController.h"
 
 @interface GasViewController : UFViewController
+{
+    __weak IBOutlet UITableView *_tableView;
+}
 
 @end

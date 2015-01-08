@@ -196,4 +196,30 @@
     return titleView;
 }
 
+
+const char tapBlockKey;
+const char tapGestureKey;
+
+#pragma -mark TapGesture ( 注意： 必须使用weakSelf : __weak typeof(self) weakSelf = self; )
+- (void)setTapActionWithBlock:(void (^)(void))block
+{
+    self.userInteractionEnabled = YES;
+    
+    UITapGestureRecognizer *gesture = objc_getAssociatedObject(self, &tapGestureKey);
+    if (!gesture){
+        gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAction:)];
+        [self addGestureRecognizer:gesture];
+        objc_setAssociatedObject(self, &tapGestureKey, gesture, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    objc_setAssociatedObject(self, &tapBlockKey, block, OBJC_ASSOCIATION_COPY);
+}
+
+- (void)tapGestureAction:(UITapGestureRecognizer *)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateRecognized){
+        void(^action)(void) = objc_getAssociatedObject(self, &tapBlockKey);
+        action ? action() : nil;
+    }
+}
+
 @end

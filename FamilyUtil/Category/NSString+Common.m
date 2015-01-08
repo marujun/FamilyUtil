@@ -154,7 +154,7 @@
                                            options:NSStringDrawingTruncatesLastVisibleLine
                                         attributes:font.fontDescriptor.fontAttributes
                                            context:nil].size;
-    return size.width;
+    return size.width+1;
 }
 
 - (float)stringHeightWithFont:(UIFont *)font width:(float)width
@@ -170,7 +170,7 @@
                                            options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                         attributes:font.fontDescriptor.fontAttributes
                                            context:nil].size;
-    return size.height;
+    return size.height+1;
 }
 
 + (NSMutableArray *)stringSegmentationByComma:(NSString *)string type:(NSString *)type

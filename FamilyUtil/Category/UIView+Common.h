@@ -36,4 +36,7 @@
 //标题View（带图片）
 + (UIView *)titileViewWithTitle:(NSString *)title image:(UIImage *)image;
 
+//注意： 必须使用weakSelf : __weak typeof(self) weakSelf = self;
+- (void)setTapActionWithBlock:(void (^)(void))block;
+
 @end

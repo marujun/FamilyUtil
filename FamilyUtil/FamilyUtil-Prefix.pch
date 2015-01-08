@@ -25,6 +25,8 @@
     #import "UIView+AutoLayout.h"
     #import "UIViewController+Navigation.h"
 
+    #import "MCAlertController.h"
+    #import "MCBaseTableCell.h"
     #import "UFViewController.h"
 #endif
 
@@ -34,8 +36,9 @@
 #define FLOG(str, args...) ((void)0)
 #endif
 
-#define userDefaults        [NSUserDefaults standardUserDefaults]
-
+#define userDefaults     [NSUserDefaults standardUserDefaults]
+#define WINDOW_HEIGHT    [[UIScreen mainScreen] bounds].size.height
+#define WINDOW_WIDTH     [[UIScreen mainScreen] bounds].size.width
 
 #define DocumentPath     [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]
 #define ResourcePath     [[NSBundle mainBundle] resourcePath]    //获取自定义文件的bundle路径
