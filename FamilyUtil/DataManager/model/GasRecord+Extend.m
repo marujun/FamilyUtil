@@ -10,5 +10,16 @@
 
 @implementation GasRecord (Extend)
 
++ (NSArray *)allRecord
+{
+    NSSortDescriptor *sort1 = [[NSSortDescriptor alloc] initWithKey:@"day_index" ascending:YES];
+    NSSortDescriptor *sort2 = [[NSSortDescriptor alloc] initWithKey:@"begin_date" ascending:YES];
+    
+    NSArray *tempArray = [[GasRecord fetchOnBgWithRequest:^(NSFetchRequest *request) {
+        [request setSortDescriptors:@[sort1,sort2]];
+    }] mutableCopy];
+
+    return tempArray;
+}
 
 @end

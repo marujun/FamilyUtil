@@ -18,8 +18,15 @@
 
 - (void)updateDisplay
 {
-    FLOG(@"_indexPath %@",_indexPath);
-    FLOG(@"self.indexPath %@",self.indexPath);
+    GasRecord *_gasRecord = _dataInfo;
+    
+    float count = _gasRecord.end_number.floatValue - _gasRecord.begin_number.floatValue;
+    count = MAX(0, count);
+    
+    NSString *timeString = [NSString stringWithFormat:@"%@--%@",
+                            [_gasRecord.begin_date stringWithDateFormat:@"MM-dd  HH:mm"],
+                            [_gasRecord.end_date stringWithDateFormat:@"HH:mm"]?:@""];
+    self.textLabel.text = [NSString stringWithFormat:@"%@   用量：%.3f",timeString ,count];
 }
 
 @end

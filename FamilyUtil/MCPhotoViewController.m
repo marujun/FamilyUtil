@@ -34,18 +34,23 @@
     
     [self setNavigationBackButtonDefault];
     
+    CGRect rect = _imageGridView.frame;
+    rect.size.width = WINDOW_WIDTH+20;
+    rect.size.height = WINDOW_HEIGHT;
+    _imageGridView.frame = rect;
+    
     _imageGridView.layoutDirection = AQGridViewLayoutDirectionHorizontal;
     _imageGridView.backgroundColor = [UIColor blackColor];
     _imageGridView.bounces = YES;
     _imageGridView.pagingEnabled = true;
     _imageGridView.showsHorizontalScrollIndicator = false;
     _imageGridView.showsVerticalScrollIndicator = false;
-
-    [_imageGridView reloadData];
     
     CGSize contentSize = _imageGridView.contentSize;
-    contentSize.height = _imageGridView.frame.size.height;
+    contentSize.height = rect.size.height;
     _imageGridView.contentSize = contentSize;
+
+    [_imageGridView reloadData];
     
     [_imageGridView scrollToItemAtIndex:_currentIndex atScrollPosition:AQGridViewScrollPositionNone animated:NO];
     

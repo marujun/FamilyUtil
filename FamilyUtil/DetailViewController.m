@@ -7,6 +7,7 @@
 //
 
 #import "DetailViewController.h"
+#import "MCPhotoViewController.h"
 #import <ImageIO/ImageIO.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
@@ -29,8 +30,8 @@
     }
     [self updateDisplay];
     
-    UIButton *rightButton = [UIButton newClearNavButtonWithTitle:@"保存" target:self action:@selector(rightNavButtonAction:)];
-    [self setNavigationRightView:rightButton];
+//    UIButton *rightButton = [UIButton newClearNavButtonWithTitle:@"保存" target:self action:@selector(rightNavButtonAction:)];
+//    [self setNavigationRightView:rightButton];
     
     beginButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
     beginButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
@@ -40,6 +41,24 @@
     endButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     endButton.contentVerticalAlignment = UIControlContentHorizontalAlignmentCenter;
     
+    UILongPressGestureRecognizer *beginRecognizer = [[UILongPressGestureRecognizer alloc]
+                                                     initWithTarget:self
+                                                     action:@selector(longPressGestureRecognizer:)];
+    beginRecognizer.accessibilityValue = [@(beginButton.tag) stringValue];
+    [beginButton addGestureRecognizer:beginRecognizer];
+    
+    UILongPressGestureRecognizer *endRecognizer = [[UILongPressGestureRecognizer alloc]
+                                                   initWithTarget:self
+                                                   action:@selector(longPressGestureRecognizer:)];
+    endRecognizer.accessibilityValue = [@(endButton.tag) stringValue];
+    [endButton addGestureRecognizer:endRecognizer];
+    
+    beginTextField.placeholder = @"0.000";
+    endTextField.placeholder = @"0.000";
+    
+    [self updateDisplay];
+    [_scrollView setContentSize:self.view.frame.size];
+    
     __weak typeof(self) weakSelf = self;
     [self.view setTapActionWithBlock:^{
         [weakSelf.view endEditing:YES];
@@ -48,11 +67,53 @@
 
 - (void)rightNavButtonAction:(UIButton *)sender
 {
-    if (_gasRecord.day_index) {
-        [_gasRecord synchronizeAndWait];
+    if (_gasRecord.day_index.intValue > 10000) {
+        [_gasRecord syncWithComplete:nil];
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    //监听键盘事件
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)longPressGestureRecognizer:(UILongPressGestureRecognizer *)recognizer
+{
+    if (recognizer.state!=UIGestureRecognizerStateBegan && recognizer.state!=UIGestureRecognizerStatePossible) {
+        return;
+    }
+    
+    MCActionSheet *screenActionSheet = [MCActionSheet initWithTitle:nil cancelButtonTitle:@"取消" otherButtonTitles:@"拍照", @"从手机相册选择", nil];
+    [screenActionSheet showWithCompletionBlock:^(NSInteger buttonIndex) {
+        if (buttonIndex >= 2) {
+            return ;
+        }
+        
+        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+        imagePicker.allowsEditing = true;
+        imagePicker.delegate = self;
+        
+        imagePicker.accessibilityValue = recognizer.accessibilityValue;
+        if (buttonIndex == 0) {
+            [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
+        } else if (buttonIndex == 1) {
+            [imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+        }
+        [self presentViewController:imagePicker animated:true completion:nil];
+    }];
+}
 
 #pragma mark UIImagePickerControlleDelegates
 - (void)imagePickerController:(UIImagePickerController *) picker didFinishPickingMediaWithInfo:(NSDictionary *)info
@@ -108,29 +169,48 @@
 {
     if (_gasRecord.begin_image) {
         beginTimeLabel.text = [NSString stringWithFormat:@"开始时间：%@",[_gasRecord.begin_date stringWithDateFormat:@"HH:mm"]];
-        beginTextField.text = [NSString stringWithFormat:@"%.3f",_gasRecord.begin_number.floatValue];
         [beginButton setBackgroundImage:_gasRecord.begin_image forState:UIControlStateNormal];
     }else{
         beginTimeLabel.text = @"开始时间：00:00";
-        beginTextField.text = @"0.000";
         [beginButton setImage:nil forState:UIControlStateNormal];
     }
     
     if (_gasRecord.end_image) {
         endTimeLabel.text = [NSString stringWithFormat:@"结束时间：%@",[_gasRecord.end_date stringWithDateFormat:@"HH:mm"]];
-        endTextField.text = [NSString stringWithFormat:@"%.3f",_gasRecord.end_number.floatValue];
         [endButton setBackgroundImage:_gasRecord.end_image forState:UIControlStateNormal];
     }else{
         endTimeLabel.text = @"结束时间：00:00";
-        endTextField.text = @"0.000";
         [endButton setImage:nil forState:UIControlStateNormal];
     }
     
+    [self updateItemNumner:true];
+}
+
+- (void)updateItemNumner:(BOOL)updateItem
+{
     float count = _gasRecord.end_number.floatValue - _gasRecord.begin_number.floatValue;
     if (count >0) {
-        titleLabel.text = [NSString stringWithFormat:@"用量：%.3f",count];
+        titleLabel.text = [NSString stringWithFormat:@"用量:%.3f   费用:%.3f",count, count*2.28];
     }else{
-        titleLabel.text = @"用量：0.000";
+        titleLabel.text = @"用量:0.000   费用:0.000";
+    }
+    
+    //自动保存数据
+    [self rightNavButtonAction:nil];
+    
+    if (!updateItem) {
+        return;
+    }
+    if (_gasRecord.begin_number.intValue) {
+        beginTextField.text = [NSString stringWithFormat:@"%.3f",_gasRecord.begin_number.floatValue];
+    }else{
+        beginTextField.text = @"";
+    }
+    
+    if (_gasRecord.end_number.intValue) {
+        endTextField.text = [NSString stringWithFormat:@"%.3f",_gasRecord.end_number.floatValue];
+    }else{
+        endTextField.text = @"";
     }
 }
 
@@ -141,24 +221,88 @@
 
 - (IBAction)imageButtonAction:(UIButton *)sender
 {
-    MCActionSheet *screenActionSheet = [MCActionSheet initWithTitle:nil cancelButtonTitle:@"取消" otherButtonTitles:@"拍照", @"从手机相册选择", nil];
-    [screenActionSheet showWithCompletionBlock:^(NSInteger buttonIndex) {
-        if (buttonIndex >= 2) {
-            return ;
+    if (sender.tag == 0) {
+        if (_gasRecord.begin_image) {
+            [self displayPhotoWithEnd:NO];
+        }else{
+            [self longPressGestureRecognizer:beginButton.gestureRecognizers[0]];
         }
-        
-        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-        imagePicker.allowsEditing = true;
-        imagePicker.delegate = self;
-        
-        imagePicker.accessibilityValue = [@(sender.tag) stringValue];
-        if (buttonIndex == 0) {
-            [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
-        } else if (buttonIndex == 1) {
-            [imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    } else
+    {
+        if (_gasRecord.end_image) {
+            [self displayPhotoWithEnd:YES];
+        }else{
+            [self longPressGestureRecognizer:endButton.gestureRecognizers[0]];
         }
-        [self presentViewController:imagePicker animated:true completion:nil];
-    }];
+    }
+}
+
+- (void)displayPhotoWithEnd:(BOOL)isEnd
+{
+    MCPhotoViewController *preVC = [[MCPhotoViewController alloc] initWithNibName:nil bundle:nil];
+    preVC.currentIndex = 0;
+    
+    if (_gasRecord.begin_image && _gasRecord.end_image) {
+        preVC.dataSourceArray = @[_gasRecord.begin_image, _gasRecord.end_image];
+        if (isEnd) {
+            preVC.currentIndex = 1;
+        }
+    }
+    else if (isEnd) {
+        preVC.dataSourceArray = @[_gasRecord.end_image];
+    }
+    else{
+        preVC.dataSourceArray = @[_gasRecord.begin_image];
+    }
+    [self.navigationController pushViewController:preVC animated:YES];
+}
+
+#pragma mark - textField delegate
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    string = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    
+    if (textField.tag == 0) {
+        _gasRecord.begin_number = [numberFormatter numberFromString:string];
+    }else{
+        _gasRecord.end_number = [numberFormatter numberFromString:string];
+        FLOG(@"_gasRecord.end_number %@",_gasRecord.end_number);
+    }
+    
+    [self updateItemNumner:false];
+    
+    return YES;
+}
+
+#pragma mark - 键盘升起，下降
+- (void)keyboardWillShow:(NSNotification*)aNotification
+{
+    if ([beginTextField isFirstResponder]) {
+        return;
+    }
+    
+    CGRect rect = [_scrollView convertRect:endTextField.frame toView:self.view];
+    
+    NSDictionary* info = [aNotification userInfo];
+    CGSize keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    
+    [UIView animateWithDuration:KeyboardAnimationDuration delay:0 options:KeyboardAnimationCurve animations:^{
+        CGFloat tmpY = (rect.origin.y + rect.size.height) - (WINDOW_HEIGHT - keyboardRect.height) + 10;
+        [_scrollView setContentOffset:CGPointMake(0, tmpY)];
+        [_scrollView setContentInset:UIEdgeInsetsMake(0 , 0, keyboardRect.height, 0)];
+        
+    } completion:nil];
+}
+
+- (void)keyboardWillHide:(NSNotification*)aNotification
+{
+    [UIView animateWithDuration:KeyboardAnimationDuration delay:0 options:KeyboardAnimationCurve animations:^{
+        [_scrollView setContentOffset:CGPointZero];
+        [_scrollView setContentInset:UIEdgeInsetsMake(0,0,0,0)];
+    } completion:nil];
 }
 
 @end

@@ -18,6 +18,7 @@
     __weak IBOutlet UILabel *endTimeLabel;
     __weak IBOutlet UITextField *endTextField;
     __weak IBOutlet UIButton *endButton;
+    __weak IBOutlet UIScrollView *_scrollView;
 }
 
 @property (nonatomic, strong) GasRecord *gasRecord;

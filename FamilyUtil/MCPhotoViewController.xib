@@ -17,7 +17,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hi4-kh-33S" customClass="AQGridView">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <rect key="frame" x="-10" y="0.0" width="340" height="568"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="Jdi-wj-mCM"/>
@@ -35,9 +35,9 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="hi4-kh-33S" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="fqR-Bh-QrP"/>
-                <constraint firstItem="hi4-kh-33S" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="iAd-Gp-vq1"/>
+                <constraint firstItem="hi4-kh-33S" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="-10" id="iAd-Gp-vq1"/>
                 <constraint firstAttribute="bottom" secondItem="hi4-kh-33S" secondAttribute="bottom" id="p7F-Kc-czg"/>
-                <constraint firstAttribute="trailing" secondItem="hi4-kh-33S" secondAttribute="trailing" id="xHS-EY-1OT"/>
+                <constraint firstAttribute="trailing" secondItem="hi4-kh-33S" secondAttribute="trailing" constant="-10" id="xHS-EY-1OT"/>
             </constraints>
         </view>
     </objects>

@@ -10,5 +10,6 @@
 
 @interface GasRecord (Extend)
 
++ (NSArray *)allRecord;
 
 @end
