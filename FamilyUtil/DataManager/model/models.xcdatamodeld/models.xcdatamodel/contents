@@ -8,8 +8,10 @@
         <attribute name="end_date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="end_image" optional="YES" attributeType="Transformable" valueTransformerName="ImageToDataTransformer" syncable="YES"/>
         <attribute name="end_number" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="is_other" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="target" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GasRecord" syncable="YES"/>
     </entity>
     <elements>
-        <element name="GasRecord" positionX="-63" positionY="-18" width="128" height="150"/>
+        <element name="GasRecord" positionX="-63" positionY="-18" width="128" height="180"/>
     </elements>
 </model>

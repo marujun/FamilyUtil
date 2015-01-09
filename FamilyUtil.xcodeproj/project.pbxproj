@@ -40,7 +40,6 @@
 		0A7E31401A5E36B7007456DB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7E313F1A5E36B7007456DB /* SystemConfiguration.framework */; };
 		0A7E31421A5E36C7007456DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7E31411A5E36C7007456DB /* UIKit.framework */; };
 		0A7E31441A5E375B007456DB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7E31431A5E375B007456DB /* Security.framework */; };
-		0A7E31471A5E3F57007456DB /* GasRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E31461A5E3F57007456DB /* GasRecord.m */; };
 		0A7E314B1A5E48D5007456DB /* GasRecord+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E314A1A5E48D5007456DB /* GasRecord+Extend.m */; };
 		0A7E31501A5E4FBE007456DB /* GasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E314E1A5E4FBE007456DB /* GasViewController.m */; };
 		0A7E31511A5E4FBE007456DB /* GasViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A7E314F1A5E4FBE007456DB /* GasViewController.xib */; };
@@ -81,6 +80,7 @@
 		0A7E31EF1A5E821E007456DB /* NSIndexSet+AQIndexesOutsideSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E31DE1A5E821E007456DB /* NSIndexSet+AQIndexesOutsideSet.m */; };
 		0A7E31F01A5E821E007456DB /* NSIndexSet+AQIsSetContiguous.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E31E01A5E821E007456DB /* NSIndexSet+AQIsSetContiguous.m */; };
 		0A7E31F11A5E821E007456DB /* UIColor+AQGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E31E21A5E821E007456DB /* UIColor+AQGridView.m */; };
+		0A7E31F41A5F7E6A007456DB /* GasRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E31F31A5F7E6A007456DB /* GasRecord.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,8 +155,6 @@
 		0A7E313F1A5E36B7007456DB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		0A7E31411A5E36C7007456DB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0A7E31431A5E375B007456DB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		0A7E31451A5E3F57007456DB /* GasRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GasRecord.h; sourceTree = "<group>"; };
-		0A7E31461A5E3F57007456DB /* GasRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GasRecord.m; sourceTree = "<group>"; };
 		0A7E31491A5E48D4007456DB /* GasRecord+Extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GasRecord+Extend.h"; sourceTree = "<group>"; };
 		0A7E314A1A5E48D5007456DB /* GasRecord+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GasRecord+Extend.m"; sourceTree = "<group>"; };
 		0A7E314D1A5E4FBE007456DB /* GasViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GasViewController.h; sourceTree = "<group>"; };
@@ -227,6 +225,8 @@
 		0A7E31E01A5E821E007456DB /* NSIndexSet+AQIsSetContiguous.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSIndexSet+AQIsSetContiguous.m"; sourceTree = "<group>"; };
 		0A7E31E11A5E821E007456DB /* UIColor+AQGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AQGridView.h"; sourceTree = "<group>"; };
 		0A7E31E21A5E821E007456DB /* UIColor+AQGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AQGridView.m"; sourceTree = "<group>"; };
+		0A7E31F21A5F7E6A007456DB /* GasRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GasRecord.h; sourceTree = "<group>"; };
+		0A7E31F31A5F7E6A007456DB /* GasRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GasRecord.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -396,8 +396,8 @@
 			children = (
 				0A7E31481A5E4863007456DB /* category */,
 				0A7E31271A5E35D8007456DB /* models.xcdatamodeld */,
-				0A7E31451A5E3F57007456DB /* GasRecord.h */,
-				0A7E31461A5E3F57007456DB /* GasRecord.m */,
+				0A7E31F21A5F7E6A007456DB /* GasRecord.h */,
+				0A7E31F31A5F7E6A007456DB /* GasRecord.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -675,12 +675,12 @@
 				0A7E316C1A5E5081007456DB /* NSObject+Common.m in Sources */,
 				0A7E316D1A5E5081007456DB /* NSString+Common.m in Sources */,
 				0A7E310F1A5E35BD007456DB /* AFURLRequestSerialization.m in Sources */,
-				0A7E31471A5E3F57007456DB /* GasRecord.m in Sources */,
 				0A7E31ED1A5E821E007456DB /* AQGridViewUpdateInfo.m in Sources */,
 				0A7E31101A5E35BD007456DB /* AFURLResponseSerialization.m in Sources */,
 				0A7E312B1A5E35D8007456DB /* NLCoreData.m in Sources */,
 				0A7E31E81A5E821E007456DB /* AQGridView.m in Sources */,
 				0A7E31881A5E66FC007456DB /* MCBaseTableCell.m in Sources */,
+				0A7E31F41A5F7E6A007456DB /* GasRecord.m in Sources */,
 				0A7E31F11A5E821E007456DB /* UIColor+AQGridView.m in Sources */,
 				0A7E314B1A5E48D5007456DB /* GasRecord+Extend.m in Sources */,
 				0A7E30C31A5E31A5007456DB /* AppDelegate.m in Sources */,
@@ -747,6 +747,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -788,6 +789,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -811,6 +813,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = "FamilyUtil/FamilyUtil-Prefix.pch";
 				INFOPLIST_FILE = FamilyUtil/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -826,6 +829,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = "FamilyUtil/FamilyUtil-Prefix.pch";
 				INFOPLIST_FILE = FamilyUtil/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

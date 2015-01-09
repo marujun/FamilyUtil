@@ -27,11 +27,17 @@
     
     if (!_gasRecord) {
         _gasRecord = [GasRecord objectWithDictionary:nil];
+        _gasRecord.is_other = @(_is_other);
     }
     [self updateDisplay];
     
-//    UIButton *rightButton = [UIButton newClearNavButtonWithTitle:@"保存" target:self action:@selector(rightNavButtonAction:)];
-//    [self setNavigationRightView:rightButton];
+    if (!_is_other) {
+        UIButton *rightButton = [UIButton newClearNavButtonWithTitle:@"其他" target:self action:@selector(rightNavButtonAction:)];
+        [self setNavigationRightView:rightButton];
+    }else{
+        self.title = @"其他";
+    }
+    
     
     beginButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
     beginButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
@@ -67,8 +73,11 @@
 
 - (void)rightNavButtonAction:(UIButton *)sender
 {
-    if (_gasRecord.day_index.intValue > 10000) {
-        [_gasRecord syncWithComplete:nil];
+    if (_gasRecord.target) {
+        DetailViewController *vc = [[DetailViewController alloc] initWithNibName:nil bundle:nil];
+        vc.gasRecord = _gasRecord.target;
+        vc.is_other = true;
+        [self.navigationController pushViewController:vc animated:true];
     }
 }
 
@@ -190,13 +199,21 @@
 {
     float count = _gasRecord.end_number.floatValue - _gasRecord.begin_number.floatValue;
     if (count >0) {
-        titleLabel.text = [NSString stringWithFormat:@"用量:%.3f   费用:%.3f",count, count*2.28];
+        titleLabel.text = [NSString stringWithFormat:@"用量：%.3f   费用：%.3f",count, count*2.28];
     }else{
-        titleLabel.text = @"用量:0.000   费用:0.000";
+        titleLabel.text = @"用量：0.000   费用：0.000";
     }
     
     //自动保存数据
-    [self rightNavButtonAction:nil];
+    if (_gasRecord.day_index.intValue > 10000) {
+        [_gasRecord syncWithComplete:^(BOOL success) {
+            if (!_gasRecord.target && !_gasRecord.is_other.boolValue) {
+                _gasRecord.target = [GasRecord newRelated:_gasRecord];
+                _gasRecord.target.is_other = @(true);
+                [_gasRecord.target synchronize];
+            }
+        }];
+    }
     
     if (!updateItem) {
         return;
