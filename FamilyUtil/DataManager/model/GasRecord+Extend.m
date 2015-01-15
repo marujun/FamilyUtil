@@ -15,11 +15,11 @@
     NSSortDescriptor *sort1 = [[NSSortDescriptor alloc] initWithKey:@"day_index" ascending:YES];
     NSSortDescriptor *sort2 = [[NSSortDescriptor alloc] initWithKey:@"begin_date" ascending:YES];
     
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"is_other == 0"];
-    NSArray *tempArray = [[GasRecord fetchOnBgWithRequest:^(NSFetchRequest *request) {
-        [request setPredicate:pred];
+//    NSPredicate *pred = [NSPredicate predicateWithFormat:@"is_other == 0"];
+    NSArray *tempArray = [self fetchWithRequest:^(NSFetchRequest *request) {
+        [request setPredicate:nil];
         [request setSortDescriptors:@[sort1,sort2]];
-    }] mutableCopy];
+    } context:[NSManagedObjectContext backgroundContext]];
 
     return tempArray;
 }

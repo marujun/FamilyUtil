@@ -21,7 +21,6 @@
     __weak IBOutlet UIScrollView *_scrollView;
 }
 
-@property (nonatomic, assign) BOOL is_other;
 @property (nonatomic, strong) GasRecord *gasRecord;
 
 

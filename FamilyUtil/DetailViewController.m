@@ -25,19 +25,7 @@
     self.title = @"编辑";
     [self setNavigationBackButtonDefault];
     
-    if (!_gasRecord) {
-        _gasRecord = [GasRecord objectWithDictionary:nil];
-        _gasRecord.is_other = @(_is_other);
-    }
     [self updateDisplay];
-    
-    if (!_is_other) {
-        UIButton *rightButton = [UIButton newClearNavButtonWithTitle:@"其他" target:self action:@selector(rightNavButtonAction:)];
-        [self setNavigationRightView:rightButton];
-    }else{
-        self.title = @"其他";
-    }
-    
     
     beginButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
     beginButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
@@ -71,16 +59,6 @@
     }];
 }
 
-- (void)rightNavButtonAction:(UIButton *)sender
-{
-    if (_gasRecord.target) {
-        DetailViewController *vc = [[DetailViewController alloc] initWithNibName:nil bundle:nil];
-        vc.gasRecord = _gasRecord.target;
-        vc.is_other = true;
-        [self.navigationController pushViewController:vc animated:true];
-    }
-}
-
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -90,9 +68,26 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
+- (void)saveData
+{
+    //保存数据
+    if (_gasRecord.day_index.intValue > 10000) {
+        if (!_gasRecord.managedObjectContext) {
+            [_gasRecord synchronizeAndWait];
+            
+            _gasRecord = [_gasRecord objectOnBgContext];
+        }else{
+            [_gasRecord synchronize];
+        }
+    }
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+    //保存数据
+    [self saveData];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
@@ -171,6 +166,9 @@
         } failureBlock:nil];
     }
     
+    //保存数据
+    [self saveData];
+    
     [picker dismissViewControllerAnimated:true completion:nil];
 }
 
@@ -204,27 +202,16 @@
         titleLabel.text = @"用量：0.000   费用：0.000";
     }
     
-    //自动保存数据
-    if (_gasRecord.day_index.intValue > 10000) {
-        [_gasRecord syncWithComplete:^(BOOL success) {
-            if (!_gasRecord.target && !_gasRecord.is_other.boolValue) {
-                _gasRecord.target = [GasRecord newRelated:_gasRecord];
-                _gasRecord.target.is_other = @(true);
-                [_gasRecord.target synchronize];
-            }
-        }];
-    }
-    
     if (!updateItem) {
         return;
     }
-    if (_gasRecord.begin_number.intValue) {
+    if (_gasRecord.begin_number.floatValue) {
         beginTextField.text = [NSString stringWithFormat:@"%.3f",_gasRecord.begin_number.floatValue];
     }else{
         beginTextField.text = @"";
     }
     
-    if (_gasRecord.end_number.intValue) {
+    if (_gasRecord.end_number.floatValue) {
         endTextField.text = [NSString stringWithFormat:@"%.3f",_gasRecord.end_number.floatValue];
     }else{
         endTextField.text = @"";
@@ -294,6 +281,7 @@
     return YES;
 }
 
+
 #pragma mark - 键盘升起，下降
 - (void)keyboardWillShow:(NSNotification*)aNotification
 {
@@ -316,6 +304,9 @@
 
 - (void)keyboardWillHide:(NSNotification*)aNotification
 {
+    //保存数据
+    [self saveData];
+    
     [UIView animateWithDuration:KeyboardAnimationDuration delay:0 options:KeyboardAnimationCurve animations:^{
         [_scrollView setContentOffset:CGPointZero];
         [_scrollView setContentInset:UIEdgeInsetsMake(0,0,0,0)];

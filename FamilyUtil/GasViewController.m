@@ -38,14 +38,31 @@
 {
     [super viewWillAppear:animated];
     
-    _dataSource = [[GasRecord allRecord] mutableCopy];
-    [_tableView reloadData];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        _dataSource = [[GasRecord allRecord] mutableCopy];
+        [_tableView  performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:true];
+    });
 }
 
 - (void)rightNavButtonAction:(UIButton *)sender
 {
-    DetailViewController *vc = [[DetailViewController alloc] initWithNibName:nil bundle:nil];
-    [self.navigationController pushViewController:vc animated:true];
+    MCActionSheet *action = [MCActionSheet initWithTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:@"主卧" otherButtonTitles:@"我们", nil];
+    [action showWithCompletionBlock:^(NSInteger buttonIndex) {
+        if (buttonIndex == 2) {
+            return;
+        }
+        
+        GasRecord *gasRecord = [GasRecord objectWithDictionary:nil];
+        if (buttonIndex == 0) {
+            gasRecord.is_other = @(true);
+        }else{
+            gasRecord.is_other = @(false);
+        }
+        
+        DetailViewController *vc = [[DetailViewController alloc] initWithNibName:nil bundle:nil];
+        vc.gasRecord = gasRecord;
+        [self.navigationController pushViewController:vc animated:true];
+    }];
 }
 
 
@@ -107,7 +124,8 @@
         [_dataSource removeObjectAtIndex:indexPath.row];
         [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
         
-        [target remove];
+        [target delete];
+        [NSManagedObject syncContextWithComplete:nil];
     }
 }
 

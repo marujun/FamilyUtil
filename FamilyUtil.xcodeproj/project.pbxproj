@@ -596,6 +596,7 @@
 				TargetAttributes = {
 					0A7E30B91A5E31A5007456DB = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = TE2958KSXV;
 					};
 					0A7E30D21A5E31A5007456DB = {
 						CreatedOnToolsVersion = 6.1.1;
