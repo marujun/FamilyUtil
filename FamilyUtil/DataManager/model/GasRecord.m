@@ -2,7 +2,7 @@
 //  GasRecord.m
 //  FamilyUtil
 //
-//  Created by marujun on 15/1/9.
+//  Created by 马汝军 on 15/1/16.
 //  Copyright (c) 2015年 marujun. All rights reserved.
 //
 
@@ -13,11 +13,9 @@
 @implementation GasRecord
 
 @dynamic begin_date;
-@dynamic begin_image;
 @dynamic begin_number;
 @dynamic day_index;
 @dynamic end_date;
-@dynamic end_image;
 @dynamic end_number;
 @dynamic is_other;
 @dynamic target;

@@ -24,25 +24,6 @@
     return tempArray;
 }
 
-+ (void)switchImageStore
-{
-    NSArray *array = [self allRecord];
-    for (GasRecord *record in array) {
-        if (record.begin_image) {
-            NSData *begin_data = UIImageJPEGRepresentation(record.begin_image, 0.5);
-            [begin_data writeToFile:record.begin_localPath atomically:YES];
-            record.begin_image = nil;
-        }
-        
-        if (record.end_image) {
-            NSData *end_data = UIImageJPEGRepresentation(record.end_image, 0.5);
-            [end_data writeToFile:record.end_localPath atomically:YES];
-            record.end_image = nil;
-        }
-    }
-    [NSManagedObject syncContextWithComplete:nil];
-}
-
 - (void)removeWithLocal
 {
     [[NSFileManager defaultManager] removeItemAtPath:self.begin_localPath error:nil];
@@ -52,7 +33,7 @@
     [NSManagedObject syncContextWithComplete:nil];
 }
 
-- (UIImage *)beginImage
+- (UIImage *)begin_image
 {
     if ([[NSFileManager defaultManager] fileExistsAtPath:self.begin_localPath]) {
         return [UIImage imageWithContentsOfFile:self.begin_localPath];
@@ -60,7 +41,7 @@
     return nil;
 }
 
-- (UIImage *)endImage
+- (UIImage *)end_image
 {
     if ([[NSFileManager defaultManager] fileExistsAtPath:self.end_localPath]) {
         return [UIImage imageWithContentsOfFile:self.end_localPath];
@@ -68,13 +49,13 @@
     return nil;
 }
 
-- (void)setBeginImage:(UIImage *)beginImage
+- (void)setBegin_image:(UIImage *)beginImage
 {
     NSData *begin_data = UIImageJPEGRepresentation(beginImage, 0.5);
     [begin_data writeToFile:self.begin_localPath atomically:YES];
 }
 
-- (void)setEndImage:(UIImage *)endImage
+- (void)setEnd_image:(UIImage *)endImage
 {
     NSData *end_data = UIImageJPEGRepresentation(endImage, 0.5);
     [end_data writeToFile:self.end_localPath atomically:YES];

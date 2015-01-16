@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A1FE04A1A69449A00D887B7 /* GasRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1FE0491A69449A00D887B7 /* GasRecord.m */; };
 		0A7E30C01A5E31A5007456DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E30BF1A5E31A5007456DB /* main.m */; };
 		0A7E30C31A5E31A5007456DB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E30C21A5E31A5007456DB /* AppDelegate.m */; };
 		0A7E30CB1A5E31A5007456DB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A7E30CA1A5E31A5007456DB /* Images.xcassets */; };
@@ -80,7 +81,6 @@
 		0A7E31EF1A5E821E007456DB /* NSIndexSet+AQIndexesOutsideSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E31DE1A5E821E007456DB /* NSIndexSet+AQIndexesOutsideSet.m */; };
 		0A7E31F01A5E821E007456DB /* NSIndexSet+AQIsSetContiguous.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E31E01A5E821E007456DB /* NSIndexSet+AQIsSetContiguous.m */; };
 		0A7E31F11A5E821E007456DB /* UIColor+AQGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E31E21A5E821E007456DB /* UIColor+AQGridView.m */; };
-		0A7E31F41A5F7E6A007456DB /* GasRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7E31F31A5F7E6A007456DB /* GasRecord.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +94,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A1FE0471A69442E00D887B7 /* models_1.0.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = models_1.0.1.xcdatamodel; sourceTree = "<group>"; };
+		0A1FE0481A69449A00D887B7 /* GasRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GasRecord.h; sourceTree = "<group>"; };
+		0A1FE0491A69449A00D887B7 /* GasRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GasRecord.m; sourceTree = "<group>"; };
 		0A7E30BA1A5E31A5007456DB /* FamilyUtil.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FamilyUtil.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A7E30BE1A5E31A5007456DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A7E30BF1A5E31A5007456DB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -225,8 +228,6 @@
 		0A7E31E01A5E821E007456DB /* NSIndexSet+AQIsSetContiguous.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSIndexSet+AQIsSetContiguous.m"; sourceTree = "<group>"; };
 		0A7E31E11A5E821E007456DB /* UIColor+AQGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AQGridView.h"; sourceTree = "<group>"; };
 		0A7E31E21A5E821E007456DB /* UIColor+AQGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AQGridView.m"; sourceTree = "<group>"; };
-		0A7E31F21A5F7E6A007456DB /* GasRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GasRecord.h; sourceTree = "<group>"; };
-		0A7E31F31A5F7E6A007456DB /* GasRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GasRecord.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -396,8 +397,8 @@
 			children = (
 				0A7E31481A5E4863007456DB /* category */,
 				0A7E31271A5E35D8007456DB /* models.xcdatamodeld */,
-				0A7E31F21A5F7E6A007456DB /* GasRecord.h */,
-				0A7E31F31A5F7E6A007456DB /* GasRecord.m */,
+				0A1FE0481A69449A00D887B7 /* GasRecord.h */,
+				0A1FE0491A69449A00D887B7 /* GasRecord.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -681,7 +682,7 @@
 				0A7E312B1A5E35D8007456DB /* NLCoreData.m in Sources */,
 				0A7E31E81A5E821E007456DB /* AQGridView.m in Sources */,
 				0A7E31881A5E66FC007456DB /* MCBaseTableCell.m in Sources */,
-				0A7E31F41A5F7E6A007456DB /* GasRecord.m in Sources */,
+				0A1FE04A1A69449A00D887B7 /* GasRecord.m in Sources */,
 				0A7E31F11A5E821E007456DB /* UIColor+AQGridView.m in Sources */,
 				0A7E314B1A5E48D5007456DB /* GasRecord+Extend.m in Sources */,
 				0A7E30C31A5E31A5007456DB /* AppDelegate.m in Sources */,
@@ -911,9 +912,10 @@
 		0A7E31271A5E35D8007456DB /* models.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				0A1FE0471A69442E00D887B7 /* models_1.0.1.xcdatamodel */,
 				0A7E31281A5E35D8007456DB /* models.xcdatamodel */,
 			);
-			currentVersion = 0A7E31281A5E35D8007456DB /* models.xcdatamodel */;
+			currentVersion = 0A1FE0471A69442E00D887B7 /* models_1.0.1.xcdatamodel */;
 			path = models.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

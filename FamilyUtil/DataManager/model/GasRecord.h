@@ -2,7 +2,7 @@
 //  GasRecord.h
 //  FamilyUtil
 //
-//  Created by marujun on 15/1/9.
+//  Created by 马汝军 on 15/1/16.
 //  Copyright (c) 2015年 marujun. All rights reserved.
 //
 
@@ -14,11 +14,9 @@
 @interface GasRecord : NSManagedObject
 
 @property (nonatomic, retain) NSDate * begin_date;
-@property (nonatomic, retain) UIImage *begin_image;
 @property (nonatomic, retain) NSNumber * begin_number;
 @property (nonatomic, retain) NSNumber * day_index;
 @property (nonatomic, retain) NSDate * end_date;
-@property (nonatomic, retain) UIImage *end_image;
 @property (nonatomic, retain) NSNumber * end_number;
 @property (nonatomic, retain) NSNumber * is_other;
 @property (nonatomic, retain) GasRecord *target;

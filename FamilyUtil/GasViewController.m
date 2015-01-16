@@ -30,8 +30,6 @@
                                     action:@selector(rightNavButtonAction:)];
     self.navigationItem.rightBarButtonItem = rightButton;
     
-    [GasRecord switchImageStore];
-    
     _dataSource = [NSMutableArray array];
     [_tableView setTableFooterView:[UIView new]];
 }

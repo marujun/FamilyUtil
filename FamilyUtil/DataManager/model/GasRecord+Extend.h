@@ -12,14 +12,13 @@
 
 + (NSArray *)allRecord;
 
-- (UIImage *)beginImage;
-- (UIImage *)endImage;
-- (void)setBeginImage:(UIImage *)begin_image;
-- (void)setEndImage:(UIImage *)end_image;
+- (UIImage *)begin_image;
+- (UIImage *)end_image;
+- (void)setBegin_image:(UIImage *)begin_image;
+- (void)setEnd_image:(UIImage *)end_image;
 
 - (void)removeWithLocal;
 
-+ (void)switchImageStore;
 + (void)directoryDirectoryExists;
 
 @end

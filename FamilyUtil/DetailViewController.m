@@ -131,10 +131,10 @@
         shootDate = [NSDate date];
         
         if ([picker.accessibilityValue intValue] == 1) {
-            _gasRecord.endImage = image;
+            _gasRecord.end_image = image;
             _gasRecord.end_date = shootDate;
         }else{
-            _gasRecord.beginImage = image;
+            _gasRecord.begin_image = image;
             _gasRecord.begin_date = shootDate;
             
             _gasRecord.day_index = @([shootDate dayIndexSince1970]);
@@ -153,10 +153,10 @@
             shootDate = [dateFormatter dateFromString:dateTimeOriginal];
             
             if ([picker.accessibilityValue intValue] == 1) {
-                _gasRecord.endImage = image;
+                _gasRecord.end_image = image;
                 _gasRecord.end_date = shootDate;
             }else{
-                _gasRecord.beginImage = image;
+                _gasRecord.begin_image = image;
                 _gasRecord.begin_date = shootDate;
                 
                 _gasRecord.day_index = @([shootDate dayIndexSince1970]);
@@ -175,17 +175,17 @@
 
 - (void)updateDisplay
 {
-    if (_gasRecord.beginImage) {
+    if (_gasRecord.begin_image) {
         beginTimeLabel.text = [NSString stringWithFormat:@"开始时间：%@",[_gasRecord.begin_date stringWithDateFormat:@"HH:mm"]];
-        [beginButton setBackgroundImage:_gasRecord.beginImage forState:UIControlStateNormal];
+        [beginButton setBackgroundImage:_gasRecord.begin_image forState:UIControlStateNormal];
     }else{
         beginTimeLabel.text = @"开始时间：00:00";
         [beginButton setImage:nil forState:UIControlStateNormal];
     }
     
-    if (_gasRecord.endImage) {
+    if (_gasRecord.end_image) {
         endTimeLabel.text = [NSString stringWithFormat:@"结束时间：%@",[_gasRecord.end_date stringWithDateFormat:@"HH:mm"]];
-        [endButton setBackgroundImage:_gasRecord.endImage forState:UIControlStateNormal];
+        [endButton setBackgroundImage:_gasRecord.end_image forState:UIControlStateNormal];
     }else{
         endTimeLabel.text = @"结束时间：00:00";
         [endButton setImage:nil forState:UIControlStateNormal];
@@ -227,14 +227,14 @@
 - (IBAction)imageButtonAction:(UIButton *)sender
 {
     if (sender.tag == 0) {
-        if (_gasRecord.beginImage) {
+        if (_gasRecord.begin_image) {
             [self displayPhotoWithEnd:NO];
         }else{
             [self longPressGestureRecognizer:beginButton.gestureRecognizers[0]];
         }
     } else
     {
-        if (_gasRecord.endImage) {
+        if (_gasRecord.end_image) {
             [self displayPhotoWithEnd:YES];
         }else{
             [self longPressGestureRecognizer:endButton.gestureRecognizers[0]];
@@ -247,17 +247,17 @@
     MCPhotoViewController *preVC = [[MCPhotoViewController alloc] initWithNibName:nil bundle:nil];
     preVC.currentIndex = 0;
     
-    if (_gasRecord.beginImage && _gasRecord.endImage) {
-        preVC.dataSourceArray = @[_gasRecord.beginImage, _gasRecord.endImage];
+    if (_gasRecord.begin_image && _gasRecord.end_image) {
+        preVC.dataSourceArray = @[_gasRecord.begin_image, _gasRecord.end_image];
         if (isEnd) {
             preVC.currentIndex = 1;
         }
     }
     else if (isEnd) {
-        preVC.dataSourceArray = @[_gasRecord.endImage];
+        preVC.dataSourceArray = @[_gasRecord.end_image];
     }
     else{
-        preVC.dataSourceArray = @[_gasRecord.beginImage];
+        preVC.dataSourceArray = @[_gasRecord.begin_image];
     }
     [self.navigationController pushViewController:preVC animated:YES];
 }
