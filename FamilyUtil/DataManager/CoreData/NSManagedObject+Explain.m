@@ -9,31 +9,6 @@
 #import "NSManagedObject+Explain.h"
 #import "NLCoreData.h"
 
-@implementation ImageToDataTransformer
-
-
-+ (BOOL)allowsReverseTransformation {
-    return YES;
-}
-
-
-+ (Class)transformedValueClass {
-    return [NSData class];
-}
-
-
-- (id)transformedValue:(id)value {
-    return UIImagePNGRepresentation(value);
-}
-
-
-- (id)reverseTransformedValue:(id)value {
-    return [[UIImage alloc] initWithData:value];
-}
-
-
-@end
-
 @implementation NSManagedObject (Explain)
 
 //通过dictionary生成一个临时的object对象但不保存到数据库中

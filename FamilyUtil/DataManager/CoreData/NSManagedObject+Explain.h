@@ -6,11 +6,6 @@
 //  Copyright (c) 2014年 jizhi. All rights reserved.
 //
 
-@interface ImageToDataTransformer : NSValueTransformer
-
-@end
-
-
 /*导入所有通过model生成的SubClass*/
 #import "GasRecord+Extend.h"
 

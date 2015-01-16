@@ -60,15 +60,6 @@ const struct NLCoreDataExceptionsStruct NLCoreDataExceptions = {
 	return instance;
 }
 
-- (instancetype)init
-{
-    if (self) {
-        ImageToDataTransformer *transformer = [[ImageToDataTransformer alloc] init];
-        [NSValueTransformer setValueTransformer:transformer forName:@"ImageToDataTransformer"];
-    }
-    return self;
-}
-
 - (void)useDatabaseFile:(NSString *)filePath
 {
 	if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
