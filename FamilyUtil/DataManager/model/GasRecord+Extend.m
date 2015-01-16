@@ -13,7 +13,7 @@
 + (NSArray *)allRecord
 {
     NSSortDescriptor *sort1 = [[NSSortDescriptor alloc] initWithKey:@"day_index" ascending:NO];
-    NSSortDescriptor *sort2 = [[NSSortDescriptor alloc] initWithKey:@"begin_date" ascending:NO];
+    NSSortDescriptor *sort2 = [[NSSortDescriptor alloc] initWithKey:@"end_date" ascending:NO];
     
 //    NSPredicate *pred = [NSPredicate predicateWithFormat:@"is_other == 0"];
     NSArray *tempArray = [self fetchWithRequest:^(NSFetchRequest *request) {
