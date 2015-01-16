@@ -19,6 +19,8 @@
 {
     // Override point for customization after application launch.
     
+    [GasRecord directoryDirectoryExists];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     _rootViewController = [[RootViewController alloc] initWithNibName:@"RootViewController" bundle:nil];
     _rootViewController.view.frame = self.window.bounds;

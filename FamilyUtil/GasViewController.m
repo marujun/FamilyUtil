@@ -30,6 +30,8 @@
                                     action:@selector(rightNavButtonAction:)];
     self.navigationItem.rightBarButtonItem = rightButton;
     
+    [GasRecord switchImageStore];
+    
     _dataSource = [NSMutableArray array];
     [_tableView setTableFooterView:[UIView new]];
 }
@@ -124,8 +126,7 @@
         [_dataSource removeObjectAtIndex:indexPath.row];
         [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
         
-        [target delete];
-        [NSManagedObject syncContextWithComplete:nil];
+        [target removeWithLocal];
     }
 }
 

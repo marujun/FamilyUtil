@@ -66,6 +66,15 @@
     [singleTap requireGestureRecognizerToFail:doubleTap];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController setNavigationBarHidden:false animated:false];//显示导航栏
+    [[UIApplication sharedApplication] setStatusBarHidden:false withAnimation:UIStatusBarAnimationNone];  // 显示状态栏
+}
+
+
 #pragma mark - 单双击手势触发
 -(void)handleDoubleTap:(UITapGestureRecognizer*)tap
 {

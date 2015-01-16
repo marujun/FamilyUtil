@@ -72,15 +72,10 @@
 {
     //保存数据
     if (_gasRecord.day_index.intValue > 10000) {
-        if (!_gasRecord.managedObjectContext) {
-            [_gasRecord synchronizeAndWait];
-            
-            _gasRecord = [_gasRecord objectOnBgContext];
-        }else{
-            [_gasRecord synchronize];
-        }
+        [_gasRecord synchronize];
     }
 }
+
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -126,15 +121,20 @@
     UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
     image = [UIImage imageWithData:UIImageJPEGRepresentation(image, 0.5)];  //转成jgp 0.5质量
     
+    if (!_gasRecord.managedObjectContext) {
+        [_gasRecord relateContext];
+        [_gasRecord synchronizeAndWait];
+    }
+    
     if(picker.sourceType == UIImagePickerControllerSourceTypeCamera)
     {
         shootDate = [NSDate date];
         
         if ([picker.accessibilityValue intValue] == 1) {
-            _gasRecord.end_image = image;
+            _gasRecord.endImage = image;
             _gasRecord.end_date = shootDate;
         }else{
-            _gasRecord.begin_image = image;
+            _gasRecord.beginImage = image;
             _gasRecord.begin_date = shootDate;
             
             _gasRecord.day_index = @([shootDate dayIndexSince1970]);
@@ -153,14 +153,15 @@
             shootDate = [dateFormatter dateFromString:dateTimeOriginal];
             
             if ([picker.accessibilityValue intValue] == 1) {
-                _gasRecord.end_image = image;
+                _gasRecord.endImage = image;
                 _gasRecord.end_date = shootDate;
             }else{
-                _gasRecord.begin_image = image;
+                _gasRecord.beginImage = image;
                 _gasRecord.begin_date = shootDate;
                 
                 _gasRecord.day_index = @([shootDate dayIndexSince1970]);
             }
+            
             [self updateDisplay];
             
         } failureBlock:nil];
@@ -174,17 +175,17 @@
 
 - (void)updateDisplay
 {
-    if (_gasRecord.begin_image) {
+    if (_gasRecord.beginImage) {
         beginTimeLabel.text = [NSString stringWithFormat:@"开始时间：%@",[_gasRecord.begin_date stringWithDateFormat:@"HH:mm"]];
-        [beginButton setBackgroundImage:_gasRecord.begin_image forState:UIControlStateNormal];
+        [beginButton setBackgroundImage:_gasRecord.beginImage forState:UIControlStateNormal];
     }else{
         beginTimeLabel.text = @"开始时间：00:00";
         [beginButton setImage:nil forState:UIControlStateNormal];
     }
     
-    if (_gasRecord.end_image) {
+    if (_gasRecord.endImage) {
         endTimeLabel.text = [NSString stringWithFormat:@"结束时间：%@",[_gasRecord.end_date stringWithDateFormat:@"HH:mm"]];
-        [endButton setBackgroundImage:_gasRecord.end_image forState:UIControlStateNormal];
+        [endButton setBackgroundImage:_gasRecord.endImage forState:UIControlStateNormal];
     }else{
         endTimeLabel.text = @"结束时间：00:00";
         [endButton setImage:nil forState:UIControlStateNormal];
@@ -226,14 +227,14 @@
 - (IBAction)imageButtonAction:(UIButton *)sender
 {
     if (sender.tag == 0) {
-        if (_gasRecord.begin_image) {
+        if (_gasRecord.beginImage) {
             [self displayPhotoWithEnd:NO];
         }else{
             [self longPressGestureRecognizer:beginButton.gestureRecognizers[0]];
         }
     } else
     {
-        if (_gasRecord.end_image) {
+        if (_gasRecord.endImage) {
             [self displayPhotoWithEnd:YES];
         }else{
             [self longPressGestureRecognizer:endButton.gestureRecognizers[0]];
@@ -246,17 +247,17 @@
     MCPhotoViewController *preVC = [[MCPhotoViewController alloc] initWithNibName:nil bundle:nil];
     preVC.currentIndex = 0;
     
-    if (_gasRecord.begin_image && _gasRecord.end_image) {
-        preVC.dataSourceArray = @[_gasRecord.begin_image, _gasRecord.end_image];
+    if (_gasRecord.beginImage && _gasRecord.endImage) {
+        preVC.dataSourceArray = @[_gasRecord.beginImage, _gasRecord.endImage];
         if (isEnd) {
             preVC.currentIndex = 1;
         }
     }
     else if (isEnd) {
-        preVC.dataSourceArray = @[_gasRecord.end_image];
+        preVC.dataSourceArray = @[_gasRecord.endImage];
     }
     else{
-        preVC.dataSourceArray = @[_gasRecord.begin_image];
+        preVC.dataSourceArray = @[_gasRecord.beginImage];
     }
     [self.navigationController pushViewController:preVC animated:YES];
 }
