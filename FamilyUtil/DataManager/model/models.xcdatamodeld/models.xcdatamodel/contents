@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14B25" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="GasRecord" representedClassName="GasRecord" syncable="YES">
         <attribute name="begin_date" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="begin_image" optional="YES" attributeType="Transformable" valueTransformerName="ImageToDataTransformer" syncable="YES"/>
+        <attribute name="begin_image" optional="YES" attributeType="Transformable" valueTransformerName="" syncable="YES"/>
         <attribute name="begin_number" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="day_index" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="end_date" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="end_image" optional="YES" attributeType="Transformable" valueTransformerName="ImageToDataTransformer" syncable="YES"/>
+        <attribute name="end_image" optional="YES" attributeType="Transformable" valueTransformerName="" syncable="YES"/>
         <attribute name="end_number" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="is_other" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="target" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GasRecord" syncable="YES"/>
